@@ -34,7 +34,7 @@
             app:contentPaddingBottom="15dp">
 
             <EditText
-                android:id="@+id/editTextText"
+                android:id="@+id/regemail_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -57,7 +57,7 @@
             app:contentPaddingBottom="15dp">
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/regpass_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -79,7 +79,7 @@
         app:contentPaddingBottom="15dp">
 
         <EditText
-            android:id="@+id/editTextReTextPassword"
+            android:id="@+id/regrepass_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -93,7 +93,7 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
+            android:id="@+id/register_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register"

@@ -12,7 +12,20 @@
           "package_name": "com.thedev.rajaratacommunity"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "889287265633-n1ngfrm4ic7ndm135j5nn7vsttnn8cgt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thedev.rajaratacommunity",
+            "certificate_hash": "d6264769b23f685253e071772e04093ecdbf31e4"
+          }
+        },
+        {
+          "client_id": "889287265633-1kk7c3mkfk80e6j84cvmgo5h57e7pbgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBYMkdg13n25HFBEjrt2BqsgKBwroUFkTc"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889287265633-1kk7c3mkfk80e6j84cvmgo5h57e7pbgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

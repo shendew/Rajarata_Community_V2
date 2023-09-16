@@ -5,12 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".Frags.HomeFrag">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/rubik_medium"
-        android:text="Notifications"
-        android:textSize="20dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/news_item"/>
 </RelativeLayout>
