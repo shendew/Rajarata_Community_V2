@@ -54,6 +54,15 @@ dependencies {
 
     implementation ("io.github.pilgr:paperdb:2.7.2")
 
+    implementation ("com.android.volley:volley:1.2.1")
+    implementation ("org.jsoup:jsoup:1.14.3")
+
+
+
+
+    //implementation ("com.shobhitpuri.custombuttons:google-signin:1.1.0")
+
+
 //    val fragment_version = "1.6.1"
 //
 //    // Java language implementation

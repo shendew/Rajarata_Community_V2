@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,11 +16,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //Get user from FirebaseAuth, Can be null.
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+
+        //Delay 1000ms to start next screen.
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(MainActivity.this,LoginScreen.class));
-                finish();
+                //check if user null or not,if user is not null,Already logged in.
+                if (user!=null){
+                    startActivity(new Intent(MainActivity.this,HomeScreen.class));
+                    finish();
+                }else{
+                    startActivity(new Intent(MainActivity.this,LoginScreen.class));
+                    finish();
+                }
+
             }
         },1000);
     }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="5dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/upro"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+       android:layout_margin="5dp"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        android:scaleType="fitCenter"
+        app:strokeColor="@color/white"
+        app:strokeWidth="3dp"
+        android:src="@drawable/user"
+        android:elevation="10dp"
+        android:padding="2dp"
+        />
+
+
+    <TextView
+        android:id="@+id/uemail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shehara"
+        android:layout_toRightOf="@id/upro"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="7dp"
+        android:textSize="12dp"
+        android:fontFamily="@font/rubik_medium"
+        />
+
+    <TextView
+        android:id="@+id/ucomment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="* use this website www.rjt.ac.lk _by shehara"
+        android:fontFamily="@font/rubik"
+        android:layout_marginTop="5dp"
+        android:layout_centerVertical="true"
+        android:paddingLeft="1dp"
+        android:layout_toRightOf="@id/upro"
+        android:layout_below="@id/uemail"
+        />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="#1B800000"
+        android:layout_below="@id/ucomment"
+        android:layout_marginVertical="2dp"
+        android:layout_marginHorizontal="50dp"
+       />
+
+</RelativeLayout>

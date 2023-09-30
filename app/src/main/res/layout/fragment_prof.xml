@@ -27,12 +27,13 @@
         android:layout_marginTop="100dp"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         android:layout_marginLeft="13dp"
-        app:strokeWidth="1dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="3dp"
         android:src="@drawable/user"
         android:elevation="10dp"/>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/pro_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Team Inferno"
@@ -68,10 +69,10 @@
                 />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/pro_fac"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Faculty of Technology"
+                android:text="-"
                 android:layout_marginLeft="10dp"
                 android:fontFamily="@font/rubik_medium"
                 android:textSize="18dp"/>
@@ -92,10 +93,10 @@
                 android:src="@drawable/status" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/pro_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Undergratuate"
+                android:text="-"
                 android:layout_marginLeft="10dp"
                 android:fontFamily="@font/rubik_medium"
                 android:textSize="18dp"/>
@@ -105,17 +106,20 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button2"
+        android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/main"
         android:paddingHorizontal="30dp"
         android:paddingVertical="10dp"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/main"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:text="Logout"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

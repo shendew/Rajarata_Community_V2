@@ -55,69 +55,71 @@ public class LoginScreen extends AppCompatActivity {
         setContentView(R.layout.activity_login_screen);
 
         google_login_button=findViewById(R.id.google_login_button);
-        logn_btn=findViewById(R.id.logn_btn);
-        useremail_txt=findViewById(R.id.useremail_txt);
-        userpass_txt=findViewById(R.id.userpass_txt);
+//        logn_btn=findViewById(R.id.logn_btn);
+//        useremail_txt=findViewById(R.id.useremail_txt);
+//        userpass_txt=findViewById(R.id.userpass_txt);
         mAuth= FirebaseAuth.getInstance();
         Fdb=FirebaseDatabase.getInstance();
         Paper.init(LoginScreen.this);
 
 
 
+        //create a GoogleSignInOptions object using webclientID.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("889287265633-1kk7c3mkfk80e6j84cvmgo5h57e7pbgf.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
-
+        //getting ready googleSignInClient using gso
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         google_login_button.setOnClickListener(view -> {
             signIn();
         });
 
-        logn_btn.setOnClickListener(view -> {
-            String userEmail=useremail_txt.getText().toString();
-            String userPasswrod=userpass_txt.getText().toString();
-            if (!userEmail.isEmpty() && !userPasswrod.isEmpty()){
-                Fdb.getReference("Users").child(userEmail).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (!snapshot.exists()){
-                            Toast.makeText(LoginScreen.this, "You Haven't Registered yet.", Toast.LENGTH_SHORT).show();
-                        }else{
-                            if(snapshot.child("password").getValue(String.class).equals(userPasswrod)){
-                                Paper.book().write("login_mode","up");
-
-                                Paper.book().write("email",userEmail);
-                                Paper.book().write("name",snapshot.child("name").getValue(String.class));
-                                Paper.book().write("faculty",snapshot.child("faculty").getValue(String.class));
-                                Paper.book().write("role",snapshot.child("role").getValue(String.class));
-                                Paper.book().write("user_img",snapshot.child("user_img").getValue(String.class));
-
-                                Toast.makeText(LoginScreen.this, "Welcome "+userEmail, Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(LoginScreen.this,HomeScreen.class));
-                                finish();
-                            }else{
-                                Toast.makeText(LoginScreen.this, "Password is wrong.", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(LoginScreen.this, "LGN_109__"+error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }else{
-                Toast.makeText(this, "Please fill details", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        logn_btn.setOnClickListener(view -> {
+//            String userEmail=useremail_txt.getText().toString();
+//            String userPasswrod=userpass_txt.getText().toString();
+//            if (!userEmail.isEmpty() && !userPasswrod.isEmpty()){
+//                Fdb.getReference("Users").child(userEmail).addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        if (!snapshot.exists()){
+//                            Toast.makeText(LoginScreen.this, "You Haven't Registered yet.", Toast.LENGTH_SHORT).show();
+//                        }else{
+//                            if(snapshot.child("password").getValue(String.class).equals(userPasswrod)){
+//                                Paper.book().write("login_mode","up");
+//
+//                                Paper.book().write("email",userEmail);
+//                                Paper.book().write("name",snapshot.child("name").getValue(String.class));
+//                                Paper.book().write("faculty",snapshot.child("faculty").getValue(String.class));
+//                                Paper.book().write("role",snapshot.child("role").getValue(String.class));
+//                                Paper.book().write("user_img",snapshot.child("user_img").getValue(String.class));
+//
+//                                Toast.makeText(LoginScreen.this, "Welcome "+userEmail, Toast.LENGTH_SHORT).show();
+//                                startActivity(new Intent(LoginScreen.this,HomeScreen.class));
+//                                finish();
+//                            }else{
+//                                Toast.makeText(LoginScreen.this, "Password is wrong.", Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//                        Toast.makeText(LoginScreen.this, "LGN_109__"+error.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }else{
+//                Toast.makeText(this, "Please fill details", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 
 
 
+    //Start account picker intent.
     private void signIn() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -126,10 +128,11 @@ public class LoginScreen extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //check for the request code
         if (requestCode==RC_SIGN_IN){
             Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
-
             try {
+                //check permitted emails
                 GoogleSignInAccount account=task.getResult(ApiException.class);
                 if (account.getEmail().contains("rjt.ac.lk")){
                     firebaseLogn(account.getIdToken());
@@ -151,22 +154,36 @@ public class LoginScreen extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            //get user and create modiEmail to Firebase database folder.
                             FirebaseUser user= mAuth.getCurrentUser();
-                            Fdb.getReference("Users").child(user.getEmail()).addValueEventListener(new ValueEventListener() {
+                            String modiEmail=user.getEmail().replace(".","-");
+                            Fdb.getReference("Users").child(modiEmail).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    Paper.book().write("login_mode","ga");
-                                    if (!snapshot.exists()){
+//                                    Paper.book().write("login_mode","ga");
+
+                                    //write user data to local database
+                                    Paper.book().write("email",user.getEmail());
+                                    Paper.book().write("name",user.getDisplayName());
+                                    if (user.getEmail().contains("tec")){
+                                        Paper.book().write("faculty","tec");
+                                    }
+                                    Paper.book().write("role","student");
+                                    Paper.book().write("user_img",String.valueOf(user.getPhotoUrl()));
+
+
+
+                                        //upload the iser data folder to firebase database
                                         HashMap<String,String> map=new HashMap();
                                         map.put("name", user.getDisplayName());
+//faculties
                                         if (user.getEmail().contains("tec")){
                                             map.put("faculty","tech");
                                         }
                                         map.put("mobile", user.getPhoneNumber());
                                         map.put("role","student");
-                                        map.put("user_img",user.getPhotoUrl().toString());
-                                        map.put("password","");
-                                        Fdb.getReference("Users").child(user.getEmail()).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        map.put("user_img",String.valueOf(user.getPhotoUrl()));
+                                        Fdb.getReference("Users").child(modiEmail).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
                                                 Toast.makeText(LoginScreen.this, "Welcome "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
@@ -179,11 +196,7 @@ public class LoginScreen extends AppCompatActivity {
                                                 Toast.makeText(LoginScreen.this, "LGN_126__"+e.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
-                                    }else{
-                                        Toast.makeText(LoginScreen.this, "Welcome "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(LoginScreen.this,HomeScreen.class));
-                                        finish();
-                                    }
+
                                 }
 
                                 @Override
