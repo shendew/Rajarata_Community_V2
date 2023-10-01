@@ -30,9 +30,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.thedev.rajaratacommunity.Adapters.EventAdapter;
 import com.thedev.rajaratacommunity.Adapters.NewsAdapter;
+import com.thedev.rajaratacommunity.Adapters.PostAdapter;
 import com.thedev.rajaratacommunity.Helpers.LoadingDialog;
 import com.thedev.rajaratacommunity.Models.Event;
 import com.thedev.rajaratacommunity.Models.NewsData;
+import com.thedev.rajaratacommunity.Models.Post;
 import com.thedev.rajaratacommunity.R;
 
 import org.jsoup.Jsoup;
@@ -49,18 +51,20 @@ public class HomeFrag extends Fragment {
 
     FirebaseDatabase db;
 
-    DatabaseReference slidersRef, scoreRef,eventRef;
+    DatabaseReference slidersRef, scoreRef,eventRef,postRef;
 
     RelativeLayout hiddebTab;
 
     TextView matchtitle, teams, score;
-    RecyclerView eventRview,newsRview;
+    RecyclerView eventRview,newsRview,postsRview;
     EventAdapter evAdapter;
+    PostAdapter POadapter;
     String latestnewlink;
     String mainurl="http://www.rjt.ac.lk/news/";
     ArrayList<Event> events=new ArrayList<>();
     ArrayList<SlideModel> imgList=new ArrayList<>();
     ArrayList<NewsData> news=new ArrayList<>();
+    ArrayList<Post> posts=new ArrayList<>();
     LoadingDialog loadingDialog;
     int loadingstts=0;
 
@@ -82,16 +86,25 @@ public class HomeFrag extends Fragment {
         score=v.findViewById(R.id.score);
         eventRview=v.findViewById(R.id.eventRview);
         newsRview=v.findViewById(R.id.newsRview);
+        postsRview=v.findViewById(R.id.postsRview);
+
         loadingDialog=new LoadingDialog(getActivity());
         loadingDialog.showDialog();
+
+
+
+        eventRview.setHasFixedSize(true);
+        postsRview.setHasFixedSize(true);
+        newsRview.setHasFixedSize(true);
 
         LinearLayoutManager lmg=new LinearLayoutManager(getContext());
         lmg.setOrientation(LinearLayoutManager.HORIZONTAL);
         eventRview.setLayoutManager(lmg);
-
-        eventRview.setHasFixedSize(true);
-        //newsRview.setHasFixedSize(true);
         newsRview.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        LinearLayoutManager lmg2=new LinearLayoutManager(getContext());
+        lmg2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        postsRview.setLayoutManager(lmg2);
 
 
 
@@ -99,6 +112,7 @@ public class HomeFrag extends Fragment {
         slidersRef=db.getReference("Sliders");
         scoreRef=db.getReference("HiddenTabs");
         eventRef=db.getReference("Events");
+        postRef=db.getReference("Posts");
 
 
 
@@ -113,6 +127,7 @@ public class HomeFrag extends Fragment {
         }
 
         loadLiveScore();
+        getPosts();
 
 
 
@@ -131,7 +146,7 @@ public class HomeFrag extends Fragment {
                 evAdapter=new EventAdapter(getContext(),events);
                 eventRview.setAdapter(evAdapter);
                 loadingstts++;
-                if (loadingstts==3){
+                if (loadingstts==4){
                     loadingDialog.hideDialog();
                 }
 
@@ -187,7 +202,7 @@ public class HomeFrag extends Fragment {
                 }
                 imageSlider.setImageList(imgList,ScaleTypes.CENTER_CROP);
                 loadingstts++;
-                if (loadingstts==3){
+                if (loadingstts==4){
                     loadingDialog.hideDialog();
                 }
 
@@ -228,7 +243,7 @@ public class HomeFrag extends Fragment {
             NewsAdapter adapter=new NewsAdapter(getContext(),news);
             newsRview.setAdapter(adapter);
             loadingstts++;
-            if (loadingstts==3){
+            if (loadingstts==4){
                 loadingDialog.hideDialog();
             }
 
@@ -238,5 +253,28 @@ public class HomeFrag extends Fragment {
         }, error -> Toast.makeText(getContext(), ""+error.getMessage(), Toast.LENGTH_SHORT).show());
         queue.add(request);
 
+    }
+
+    private void getPosts(){
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds: snapshot.getChildren()){
+                    posts.add(ds.getValue(Post.class));
+                }
+                POadapter=new PostAdapter(getContext(), posts);
+                postsRview.setAdapter(POadapter);
+                loadingstts++;
+                if (loadingstts==4){
+                    loadingDialog.hideDialog();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

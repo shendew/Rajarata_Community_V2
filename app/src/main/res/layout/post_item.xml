@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/post_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
          />
@@ -23,7 +23,7 @@
         android:paddingHorizontal="10dp">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/post_owner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -31,7 +31,7 @@
             android:fontFamily="@font/rubik_medium"/>
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/post_heart"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
 
