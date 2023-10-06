@@ -113,14 +113,22 @@
 
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_login_button"
+        android:id="@+id/google_login_butto"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_gravity="center"
 
-        />
+        >
 
+
+    </com.google.android.gms.common.SignInButton>
+
+    <ImageView
+        android:id="@+id/google_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btn_google_signin_dark_focus_web" />
 
 
     <TextView

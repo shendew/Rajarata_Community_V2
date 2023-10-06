@@ -83,7 +83,7 @@ public class ProfileFrag extends Fragment {
         }
 
         loadingstts++;
-        if (loadingstts==3){
+        if (loadingstts==1){
             loadingDialog.hideDialog();
         }
 

@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +25,18 @@
         android:theme="@style/Theme.RajarataCommunity"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".NewsViewScreen"
+            android:exported="false" />
+        <activity
+            android:name=".NotificationViewScreen"
+            android:exported="false" />
+        <activity
+            android:name=".NotificationPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostViewScreen"
+            android:exported="false" />
         <activity
             android:name=".CommentView"
             android:exported="false" />
@@ -37,13 +51,7 @@
             android:exported="false" />
         <activity
             android:name=".HomeScreen"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".RegisterScreen"
             android:exported="false" />
@@ -53,14 +61,16 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+        <service
+            android:name=".Services.NotificationService"
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"

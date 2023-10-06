@@ -182,6 +182,8 @@ public class LoginScreen extends AppCompatActivity {
                                         }
                                         map.put("mobile", user.getPhoneNumber());
                                         map.put("role","student");
+                                        map.put("fav","");
+                                        map.put("year","");
                                         map.put("user_img",String.valueOf(user.getPhotoUrl()));
                                         Fdb.getReference("Users").child(modiEmail).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

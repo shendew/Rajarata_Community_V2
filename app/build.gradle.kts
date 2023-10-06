@@ -58,7 +58,11 @@ dependencies {
     implementation ("org.jsoup:jsoup:1.14.3")
 
 
+    //implementation ("org.sufficientlysecure:html-textview:4.0")
+    implementation ("com.github.sunny52525:htmlView:0.1")
+    implementation ("org.jsoup:jsoup:1.14.3")
 
+    implementation ("androidx.work:work-runtime:2.7.1")
 
     //implementation ("com.shobhitpuri.custombuttons:google-signin:1.1.0")
 

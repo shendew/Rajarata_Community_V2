@@ -7,10 +7,16 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentContainerView;
 
+import android.app.ActivityManager;
 import android.app.FragmentContainer;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +34,7 @@ import com.thedev.rajaratacommunity.Frags.FavFrag;
 import com.thedev.rajaratacommunity.Frags.HomeFrag;
 import com.thedev.rajaratacommunity.Frags.NotiFrag;
 import com.thedev.rajaratacommunity.Frags.ProfileFrag;
+import com.thedev.rajaratacommunity.Services.NotificationService;
 
 import io.paperdb.Paper;
 
@@ -52,15 +59,17 @@ public class HomeScreen extends AppCompatActivity{
 
         auth=FirebaseAuth.getInstance();
 
-        logSts=Paper.book().read("login_mode");
-        if (!logSts.equals("up")){
+
+
+//        logSts=Paper.book().read("login_mode");
+//        if (!logSts.equals("up")){
             if (auth.getCurrentUser() !=null){
                 user=auth.getCurrentUser();
             }else{
                 Toast.makeText(this, "Security Warning..... Logging out automatically", Toast.LENGTH_SHORT).show();
             }
 
-        }
+//        }
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         drawerLayout =findViewById(R.id.my_drawer_layout);
@@ -69,6 +78,18 @@ public class HomeScreen extends AppCompatActivity{
         toolBar=findViewById(R.id.toolBar);
         fragment_container_view=findViewById(R.id.fragment_container_view);
 
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            NotificationChannel channel= new NotificationChannel("RUSTLE","RUSL", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager manager =getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+            NotificationChannel defaultvhannel= new NotificationChannel("default","Default", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager defaultmanager =getSystemService(NotificationManager.class);
+            defaultmanager.createNotificationChannel(defaultvhannel);
+
+        }
 
 
 
@@ -154,6 +175,40 @@ public class HomeScreen extends AppCompatActivity{
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
+
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        if (!isMyServiceRunning(NotificationService.class)){
+//            try {
+//                startService(new Intent(this, NotificationService.class));
+//            }catch (Exception e){
+//                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+//
+//            }
+//
+//    }
 
 
+
+    }
 }
