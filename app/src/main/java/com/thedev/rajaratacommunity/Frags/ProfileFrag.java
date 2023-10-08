@@ -14,6 +14,7 @@ import android.widget.Toast;
 import android.window.SplashScreen;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +22,8 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.thedev.rajaratacommunity.Helpers.LoadingDialog;
+import com.thedev.rajaratacommunity.MyCommentsScreen;
+import com.thedev.rajaratacommunity.MyPostsScreen;
 import com.thedev.rajaratacommunity.R;
 
 import io.paperdb.Paper;
@@ -36,6 +39,7 @@ public class ProfileFrag extends Fragment {
     AppCompatButton logout_btn;
     ShapeableImageView pro_pic;
     LoadingDialog loadingDialog;
+    CardView myQues,myPosts;
     int loadingstts=0;
     public ProfileFrag() {
         // Required empty public constructor
@@ -54,6 +58,8 @@ public class ProfileFrag extends Fragment {
         pro_status=v.findViewById(R.id.pro_status);
         logout_btn=v.findViewById(R.id.logout_btn);
         pro_pic=v.findViewById(R.id.pro_pic);
+        myPosts=v.findViewById(R.id.myPosts);
+        myQues=v.findViewById(R.id.myQues);
         loadingDialog=new LoadingDialog(getActivity());
         loadingDialog.showDialog();
 
@@ -90,10 +96,14 @@ public class ProfileFrag extends Fragment {
 
         logout_btn.setOnClickListener(view -> {
             auth.signOut();
-
-
         });
 
+        myQues.setOnClickListener(view -> {
+            startActivity(new Intent(getContext(), MyCommentsScreen.class));
+        });
+        myPosts.setOnClickListener(view -> {
+           startActivity(new Intent(getContext(), MyPostsScreen.class));
+        });
         return v;
     }
 }
