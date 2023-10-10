@@ -168,8 +168,14 @@ public class LoginScreen extends AppCompatActivity {
                                     if (user.getEmail().contains("tec")){
                                         Paper.book().write("faculty","tec");
                                     }
+
+
+                                    //Faculty filter
+
+                                    Paper.book().write("year",modiEmail.substring(3,7));
                                     Paper.book().write("role","student");
                                     Paper.book().write("user_img",String.valueOf(user.getPhotoUrl()));
+
 
 
 
@@ -183,7 +189,8 @@ public class LoginScreen extends AppCompatActivity {
                                         map.put("mobile", user.getPhoneNumber());
                                         map.put("role","student");
                                         map.put("fav","");
-                                        map.put("year","");
+
+                                        map.put("year",modiEmail.substring(3,7));
                                         map.put("user_img",String.valueOf(user.getPhotoUrl()));
                                         Fdb.getReference("Users").child(modiEmail).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

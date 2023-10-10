@@ -6,6 +6,9 @@ public class QA {
     String id,email,question;
     ArrayList<String> answers;
 
+    public QA() {
+    }
+
     public QA(String id, String email, String question, ArrayList<String> answers) {
         this.id = id;
         this.email = email;

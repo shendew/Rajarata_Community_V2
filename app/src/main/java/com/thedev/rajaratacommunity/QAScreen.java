@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.skydoves.elasticviews.ElasticImageView;
 import com.thedev.rajaratacommunity.Adapters.QAAdapter;
 import com.thedev.rajaratacommunity.Helpers.AddCommentDialog;
 import com.thedev.rajaratacommunity.Models.QA;
@@ -27,6 +28,7 @@ public class QAScreen extends AppCompatActivity {
     ArrayList<QA> qas;
     RecyclerView qaRview;
     FloatingActionButton addComment;
+    ElasticImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class QAScreen extends AppCompatActivity {
         db=FirebaseDatabase.getInstance();
         qaRview=findViewById(R.id.qaRview);
         addComment=findViewById(R.id.addComment);
+        back=findViewById(R.id.back);
         QARef=db.getReference("QA");
 
         qaRview.setHasFixedSize(true);
@@ -45,6 +48,10 @@ public class QAScreen extends AppCompatActivity {
         addComment.setOnClickListener(view -> {
             AddCommentDialog dialog =new AddCommentDialog(QAScreen.this);
             dialog.showDialog();
+        });
+
+        back.setOnClickListener(view -> {
+            finish();
         });
     }
 

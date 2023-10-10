@@ -1,5 +1,6 @@
 package com.thedev.rajaratacommunity.Frags;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.thedev.rajaratacommunity.Adapters.EventAdapter;
 import com.thedev.rajaratacommunity.Adapters.NewsAdapter;
 import com.thedev.rajaratacommunity.Adapters.PostAdapter;
+import com.thedev.rajaratacommunity.AllNewsScreen;
+import com.thedev.rajaratacommunity.AllPostsScreen;
 import com.thedev.rajaratacommunity.Helpers.LoadingDialog;
 import com.thedev.rajaratacommunity.Models.Event;
 import com.thedev.rajaratacommunity.Models.NewsData;
@@ -43,6 +46,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import io.paperdb.Paper;
 
 
 public class HomeFrag extends Fragment {
@@ -55,7 +59,7 @@ public class HomeFrag extends Fragment {
 
     RelativeLayout hiddebTab;
 
-    TextView matchtitle, teams, score;
+    TextView matchtitle, teams, score,newsmore,postmore;
     RecyclerView eventRview,newsRview,postsRview;
     EventAdapter evAdapter;
     PostAdapter POadapter;
@@ -67,6 +71,7 @@ public class HomeFrag extends Fragment {
     ArrayList<Post> posts=new ArrayList<>();
     LoadingDialog loadingDialog;
     int loadingstts=0;
+    String email;
 
 
     public HomeFrag() {
@@ -87,6 +92,10 @@ public class HomeFrag extends Fragment {
         eventRview=v.findViewById(R.id.eventRview);
         newsRview=v.findViewById(R.id.newsRview);
         postsRview=v.findViewById(R.id.postsRview);
+        newsmore=v.findViewById(R.id.newsMore);
+        postmore=v.findViewById(R.id.postsMore);
+        Paper.init(getContext());
+        email=Paper.book().read("email");
 
         loadingDialog=new LoadingDialog(getActivity());
         loadingDialog.showDialog();
@@ -128,6 +137,13 @@ public class HomeFrag extends Fragment {
 
         loadLiveScore();
         getPosts();
+
+        newsmore.setOnClickListener(view -> {
+            getContext().startActivity(new Intent(getContext(), AllNewsScreen.class));
+        });
+        postmore.setOnClickListener(view -> {
+            getContext().startActivity(new Intent(getContext(), AllPostsScreen.class));
+        });
 
 
 

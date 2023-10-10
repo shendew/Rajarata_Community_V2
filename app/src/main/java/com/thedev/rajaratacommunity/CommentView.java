@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.skydoves.elasticviews.ElasticImageView;
 import com.thedev.rajaratacommunity.Adapters.AAdapter;
 import com.thedev.rajaratacommunity.Models.Answer;
 
@@ -35,6 +36,7 @@ public class CommentView extends AppCompatActivity {
     AAdapter adapter;
     EditText comment_input;
     ImageView send_img;
+    ElasticImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,7 @@ public class CommentView extends AppCompatActivity {
         answerRview=findViewById(R.id.answerRview);
         comment_input=findViewById(R.id.comment_input);
         send_img=findViewById(R.id.send_img);
+        back=findViewById(R.id.back);
         ans=new ArrayList<>();
         answers=new ArrayList<>();
         Paper.init(this);
@@ -84,6 +87,9 @@ public class CommentView extends AppCompatActivity {
             }
         });
 
+        back.setOnClickListener(view -> {
+            finish();
+        });
 
     }
 

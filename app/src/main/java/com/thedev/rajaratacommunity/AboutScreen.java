@@ -11,7 +11,7 @@ import com.skydoves.elasticviews.ElasticImageView;
 
 public class AboutScreen extends AppCompatActivity {
     ElasticImageView back;
-    ImageView map;
+    ElasticImageView map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

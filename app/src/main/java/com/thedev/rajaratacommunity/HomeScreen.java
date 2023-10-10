@@ -30,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.skydoves.elasticviews.ElasticImageView;
 import com.thedev.rajaratacommunity.Frags.FavFrag;
 import com.thedev.rajaratacommunity.Frags.HomeFrag;
 import com.thedev.rajaratacommunity.Frags.NotiFrag;
@@ -50,6 +51,7 @@ public class HomeScreen extends AppCompatActivity{
     String logSts="";
     FirebaseUser user;
     FirebaseAuth auth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

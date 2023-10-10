@@ -34,8 +34,8 @@ public class ProfileFrag extends Fragment {
 
     FirebaseUser user;
     FirebaseAuth auth;
-    String userName,userFac,userImg,userEmail,userRole;
-    TextView pro_name,pro_fac,pro_status;
+    String userName,userFac,userImg,userEmail,userRole,userYear;
+    TextView pro_name,pro_fac,pro_status,pro_yr;
     AppCompatButton logout_btn;
     ShapeableImageView pro_pic;
     LoadingDialog loadingDialog;
@@ -60,6 +60,7 @@ public class ProfileFrag extends Fragment {
         pro_pic=v.findViewById(R.id.pro_pic);
         myPosts=v.findViewById(R.id.myPosts);
         myQues=v.findViewById(R.id.myQues);
+        pro_yr=v.findViewById(R.id.pro_yr);
         loadingDialog=new LoadingDialog(getActivity());
         loadingDialog.showDialog();
 
@@ -68,10 +69,12 @@ public class ProfileFrag extends Fragment {
         userEmail=Paper.book().read("email");
         userFac=Paper.book().read("faculty");
         userImg=Paper.book().read("user_img");
+        userYear=Paper.book().read("year");
         userRole="student";
 
 
         pro_name.setText(userName);
+        pro_yr.setText(userYear);
         Glide.with(container.getContext()).load(userImg).centerCrop().into(pro_pic);
 
 //faculties

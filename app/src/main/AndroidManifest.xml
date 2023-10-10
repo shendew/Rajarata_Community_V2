@@ -26,6 +26,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AllNewsScreen"
+            android:exported="false" />
+        <activity
+            android:name=".AllPostsScreen"
+            android:exported="false" />
+        <activity
             android:name=".MyCommentsScreen"
             android:exported="false" />
         <activity
