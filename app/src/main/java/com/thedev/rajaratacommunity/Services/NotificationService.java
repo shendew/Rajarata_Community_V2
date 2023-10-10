@@ -24,6 +24,8 @@ import com.thedev.rajaratacommunity.R;
 
 import java.util.ArrayList;
 
+import io.paperdb.Paper;
+
 public class NotificationService extends Service {
     @Nullable
     @Override
@@ -57,6 +59,10 @@ public class NotificationService extends Service {
     }
 
     private void getNotifications() {
+        Paper.init(getApplicationContext());
+        String fac,year;
+        fac=Paper.book().read("faculty");
+        year=Paper.book().read("year");
         ArrayList<NotificationData> notifactions = new ArrayList<>();
         FirebaseDatabase.getInstance().getReference("Notifications")
                 .addValueEventListener(new ValueEventListener() {
@@ -68,13 +74,52 @@ public class NotificationService extends Service {
                         for (DataSnapshot data : snapshot.getChildren()) {
 
                             if (data.child("STATUS").getValue(String.class).equals("newnot")) {
-                                String puredesc = data.child("NOT_DESC").getValue(String.class);
 
-                                String title = data.child("TITLE").getValue(String.class);
-                                String desc = puredesc;
-                                String image = data.child("IMAGE").getValue(String.class);
-                                String filt = data.child("FILT").getValue(String.class);
-                                notifactions.add(new NotificationData("0", title, "desc", image, desc, "", filt));
+                                String[] fil=data.child("FILT").getValue(String.class).split(",");
+
+
+                                if (fil[0].equals(fac) && fil[1].equals(year)){
+                                    Toast.makeText(NotificationService.this, "filter added", Toast.LENGTH_SHORT).show();
+
+                                    String puredesc = data.child("NOT_DESC").getValue(String.class);
+                                    String title = data.child("TITLE").getValue(String.class);
+                                    String desc = puredesc;
+                                    String image = data.child("IMAGE").getValue(String.class);
+                                    String filt = data.child("FILT").getValue(String.class);
+                                    notifactions.add(new NotificationData("0", title, "desc", image, desc, "", filt));
+
+                                } else if (fil[0].equals(fac) && fil[1].equals("1")) {
+                                    Toast.makeText(NotificationService.this, "filter fac added", Toast.LENGTH_SHORT).show();
+
+                                    String puredesc = data.child("NOT_DESC").getValue(String.class);
+                                    String title = data.child("TITLE").getValue(String.class);
+                                    String desc = puredesc;
+                                    String image = data.child("IMAGE").getValue(String.class);
+                                    String filt = data.child("FILT").getValue(String.class);
+                                    notifactions.add(new NotificationData("0", title, "desc", image, desc, "", filt));
+
+
+                                } else if (fil[0].equals("1") && fil[1].equals(year)) {
+                                    Toast.makeText(NotificationService.this, "filter year added", Toast.LENGTH_SHORT).show();
+
+                                    String puredesc = data.child("NOT_DESC").getValue(String.class);
+                                    String title = data.child("TITLE").getValue(String.class);
+                                    String desc = puredesc;
+                                    String image = data.child("IMAGE").getValue(String.class);
+                                    String filt = data.child("FILT").getValue(String.class);
+                                    notifactions.add(new NotificationData("0", title, "desc", image, desc, "", filt));
+
+                                } else if (fil[0].equals("1") && fil[1].equals("1")) {
+
+                                    String puredesc = data.child("NOT_DESC").getValue(String.class);
+                                    String title = data.child("TITLE").getValue(String.class);
+                                    String desc = puredesc;
+                                    String image = data.child("IMAGE").getValue(String.class);
+                                    String filt = data.child("FILT").getValue(String.class);
+                                    notifactions.add(new NotificationData("0", title, "desc", image, desc, "", filt));
+                                    Toast.makeText(NotificationService.this, "ALl added", Toast.LENGTH_SHORT).show();
+
+                                }
 
 
                             }

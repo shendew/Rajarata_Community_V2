@@ -200,15 +200,15 @@ public class HomeScreen extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-//        if (!isMyServiceRunning(NotificationService.class)){
-//            try {
-//                startService(new Intent(this, NotificationService.class));
-//            }catch (Exception e){
-//                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//    }
+        if (!isMyServiceRunning(NotificationService.class)){
+            try {
+                startService(new Intent(this, NotificationService.class));
+            }catch (Exception e){
+                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+
+            }
+
+    }
 
 
 
