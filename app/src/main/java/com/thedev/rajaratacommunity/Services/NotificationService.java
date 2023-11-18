@@ -62,6 +62,7 @@ public class NotificationService extends Service {
         Paper.init(getApplicationContext());
         String fac,year;
         fac=Paper.book().read("faculty");
+        Toast.makeText(this, ""+fac, Toast.LENGTH_SHORT).show();
         year=Paper.book().read("year");
         ArrayList<NotificationData> notifactions = new ArrayList<>();
         FirebaseDatabase.getInstance().getReference("Notifications")
@@ -76,9 +77,9 @@ public class NotificationService extends Service {
                             if (data.child("STATUS").getValue(String.class).equals("newnot")) {
 
                                 String[] fil=data.child("FILT").getValue(String.class).split(",");
+                                Toast.makeText(NotificationService.this, ""+fil[0]+"__"+fil[1], Toast.LENGTH_SHORT).show();
 
-
-                                if (fil[0].equals(fac) && fil[1].equals(year)){
+                                if (fil[0].equals(year) && fil[1].equals(fac)){
                                     Toast.makeText(NotificationService.this, "filter added", Toast.LENGTH_SHORT).show();
 
                                     String puredesc = data.child("NOT_DESC").getValue(String.class);
@@ -88,7 +89,7 @@ public class NotificationService extends Service {
                                     String filt = data.child("FILT").getValue(String.class);
                                     notifactions.add(new NotificationData("0", title, "desc", image, desc, "", filt));
 
-                                } else if (fil[0].equals(fac) && fil[1].equals("1")) {
+                                } else if (fil[0].equals("1") && fil[1].equals(fac)) {
                                     Toast.makeText(NotificationService.this, "filter fac added", Toast.LENGTH_SHORT).show();
 
                                     String puredesc = data.child("NOT_DESC").getValue(String.class);
@@ -99,7 +100,7 @@ public class NotificationService extends Service {
                                     notifactions.add(new NotificationData("0", title, "desc", image, desc, "", filt));
 
 
-                                } else if (fil[0].equals("1") && fil[1].equals(year)) {
+                                } else if (fil[0].equals(year) && fil[1].equals("1")) {
                                     Toast.makeText(NotificationService.this, "filter year added", Toast.LENGTH_SHORT).show();
 
                                     String puredesc = data.child("NOT_DESC").getValue(String.class);
@@ -154,6 +155,7 @@ public class NotificationService extends Service {
 
 
 
+            //TODO:Notification filter check
 
             Intent notificationIntent = new Intent(NotificationService.this, NotificationPageActivity.class);
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

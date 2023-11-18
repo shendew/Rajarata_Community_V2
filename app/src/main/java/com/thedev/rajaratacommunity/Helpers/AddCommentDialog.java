@@ -42,7 +42,7 @@ public class AddCommentDialog {
         // layoutinflater object and use activity to get layout inflater
         LayoutInflater inflater = context.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.addcomment_dialog, null));
-        builder.setCancelable(false);
+
 
 
 

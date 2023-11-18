@@ -20,28 +20,40 @@
 
     <string-array name="years_array">
         <item>All Years</item>
-        <item>First Year</item>
-        <item>Second Year</item>
-        <item>Third Year</item>
-        <item>Final Year</item>
-        <item>Alumni Association</item>
+        <item>2022</item>
+        <item>2021</item>
+        <item>2020</item>
+        <item>2019r</item>
+        <item>alumni</item>
     </string-array>
 
     <string-array name="faculty_array">
         <item>All Faculties</item>
-        <item>Technology Faculty</item>
-        <item>Applied Science Faculty</item>
-        <item>Agriculture Faculty</item>
-        <item>Management Studies Faculty</item>
-        <item>Medical and Allied Faculty</item>
-        <item>Social Science and Humanities Faculty</item>
+        <item>tech</item>
+        <item>fas</item>
+        <item>foa</item>
+        <item>fms</item>
+        <item>fmas</item>
+        <item>fssh</item>
     </string-array>
 
     <string-array name="event_array">
         <item>All Events</item>
         <item>Culture Festival</item>
         <item>Pilibimbu Event</item>
-
     </string-array>
+
+    <string-array name="years">
+        <item>2022</item>
+        <item>2021</item>
+        <item>2020</item>
+        <item>2019</item>
+        <item>2018</item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+    </string-array>
+
+
 
 </resources>

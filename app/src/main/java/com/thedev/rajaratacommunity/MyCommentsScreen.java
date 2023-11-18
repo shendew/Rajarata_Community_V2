@@ -50,6 +50,8 @@ public class MyCommentsScreen extends AppCompatActivity {
         });
     }
 
+    //TODO:Q & A Delete option
+
     private void getQAs() {
         FirebaseDatabase.getInstance().getReference("QA").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

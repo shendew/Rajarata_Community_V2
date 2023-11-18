@@ -64,7 +64,15 @@ dependencies {
 
     implementation ("androidx.work:work-runtime:2.7.1")
 
-    //implementation ("com.shobhitpuri.custombuttons:google-signin:1.1.0")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
+
+    implementation ("androidx.work:work-runtime:2.8.1")
+
+
+
+
+
+
 
 
 //    val fragment_version = "1.6.1"

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -33,6 +35,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.skydoves.elasticviews.ElasticImageView;
+import com.thedev.rajaratacommunity.Helpers.SetupDialog;
 
 import java.util.HashMap;
 
@@ -43,7 +47,7 @@ public class LoginScreen extends AppCompatActivity {
     private String verificationId;
     FirebaseAuth mAuth;
     GoogleSignInClient googleSignInClient;
-    ImageView google_login_button;
+    LottieAnimationView google_login_button;
     FirebaseDatabase Fdb;
     AppCompatButton logn_btn;
     EditText useremail_txt,userpass_txt;
@@ -160,20 +164,15 @@ public class LoginScreen extends AppCompatActivity {
                             Fdb.getReference("Users").child(modiEmail).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+
 //                                    Paper.book().write("login_mode","ga");
 
                                     //write user data to local database
                                     Paper.book().write("email",user.getEmail());
                                     Paper.book().write("name",user.getDisplayName());
-                                    if (user.getEmail().contains("tec")){
-                                        Paper.book().write("faculty","tec");
-                                    }
-
-
-                                    //Faculty filter
-
-                                    Paper.book().write("year",modiEmail.substring(3,7));
-                                    Paper.book().write("role","student");
+                                    //Paper.book().write("role","student");
                                     Paper.book().write("user_img",String.valueOf(user.getPhotoUrl()));
 
 
@@ -182,22 +181,20 @@ public class LoginScreen extends AppCompatActivity {
                                         //upload the iser data folder to firebase database
                                         HashMap<String,String> map=new HashMap();
                                         map.put("name", user.getDisplayName());
-//faculties
-                                        if (user.getEmail().contains("tec")){
-                                            map.put("faculty","tech");
-                                        }
+                                        map.put("faculty","");
                                         map.put("mobile", user.getPhoneNumber());
                                         map.put("role","student");
                                         map.put("fav","");
-
-                                        map.put("year",modiEmail.substring(3,7));
+                                        map.put("year","");
                                         map.put("user_img",String.valueOf(user.getPhotoUrl()));
+
                                         Fdb.getReference("Users").child(modiEmail).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                Toast.makeText(LoginScreen.this, "Welcome "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(LoginScreen.this,HomeScreen.class));
-                                                finish();
+                                                //Toast.makeText(LoginScreen.this, "Welcome "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                                                SetupDialog dialog=new SetupDialog(LoginScreen.this,modiEmail,user.getDisplayName());
+                                                dialog.showDialog();
+
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override

@@ -31,6 +31,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.skydoves.elasticviews.ElasticImageView;
+
 import com.thedev.rajaratacommunity.Frags.FavFrag;
 import com.thedev.rajaratacommunity.Frags.HomeFrag;
 import com.thedev.rajaratacommunity.Frags.NotiFrag;
@@ -58,6 +59,7 @@ public class HomeScreen extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         Paper.init(HomeScreen.this);
+
 
         auth=FirebaseAuth.getInstance();
 

@@ -25,6 +25,20 @@
         android:theme="@style/Theme.RajarataCommunity"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity android:name="com.squareup.leakcanary.internal.DisplayLeakActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".NotificationAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NotificationCenterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LivePannel"
+            android:exported="false" />
+        <activity
+            android:name=".ControlPanelScreen"
+            android:exported="false" />
         <activity
             android:name=".AllNewsScreen"
             android:exported="false" />
@@ -69,7 +83,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginScreen"
-            android:exported="false" />
+            android:exported="false"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
