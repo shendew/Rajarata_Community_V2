@@ -6,29 +6,42 @@
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="15dp">
 
+
+
     <ImageView
         android:id="@+id/event_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
          />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_gravity="bottom"
+        android:background="#BFFFFFFF">
+        <TextView
+            android:id="@+id/event_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wala sathiya"
+            android:textAlignment="center"
+            android:fontFamily="@font/rubik_medium"
+            android:layout_alignParentBottom="true"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"/>
 
-    <TextView
-        android:id="@+id/event_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Wala sathiya"
-        android:fontFamily="@font/rubik_medium"
-        android:layout_gravity="bottom|center"
-        android:textSize="20dp"
-        android:layout_marginBottom="65dp"/>
+        <Button
+            android:id="@+id/event_more_button"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="More"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp"/>
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/event_more_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="More"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="10dp"/>
+
+
 
 
 </androidx.cardview.widget.CardView>

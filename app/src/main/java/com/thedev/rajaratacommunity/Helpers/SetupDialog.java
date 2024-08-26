@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 import com.thedev.rajaratacommunity.HomeScreen;
 import com.thedev.rajaratacommunity.LoginScreen;
@@ -33,6 +35,7 @@ public class SetupDialog {
     Button save;
     String modiEmail;
     String userName;
+    FirebaseDatabase Fdb;
 
     public SetupDialog(Activity context, String modiEmail, String userName) {
         this.context = context;
@@ -41,19 +44,20 @@ public class SetupDialog {
     }
 
     public void showDialog(){
-
+        Fdb=FirebaseDatabase.getInstance();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         // layoutinflater object and use activity to get layout inflater
         LayoutInflater inflater = context.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.loading_lay, null));
+        builder.setView(inflater.inflate(R.layout.login_setup, null));
         builder.setCancelable(false);
 
         dialog = builder.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
 
         year=dialog.findViewById(R.id.year);
-        fac=dialog.findViewById(R.id.fac);
+        fac=dialog.findViewById(R.id.faculty);
         save=dialog.findViewById(R.id.save);
 
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(context.getApplicationContext(),
@@ -63,21 +67,22 @@ public class SetupDialog {
                 R.array.years_array,androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
         adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
-        year.setAdapter(adapter);
-        fac.setAdapter(adapter2);
+        year.setAdapter(adapter2);
+        fac.setAdapter(adapter);
 
         save.setOnClickListener(view -> {
             localSave(year.getSelectedItem().toString(),fac.getSelectedItem().toString());
             saveDB(context,year.getSelectedItem().toString(),fac.getSelectedItem().toString());
         });
 
-        dialog.show();
+
     }
 
     private void saveDB(Activity context, String year, String fac) {
-        FirebaseDatabase Fdb;
-        Fdb=FirebaseDatabase.getInstance();
+
+
 
 
         HashMap<String,String> map=new HashMap<>();
@@ -85,21 +90,46 @@ public class SetupDialog {
         map.put("faculty",fac);
         map.put("year",year);
 
+        Fdb.getReference("Users").child(modiEmail).child("faculty").setValue(fac).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Fdb.getReference("Users").child(modiEmail).child("year").setValue(year).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                dismissDialog();
+                                Toast.makeText(context, "Welcome "+userName, Toast.LENGTH_SHORT).show();
+                                context.startActivity(new Intent(context, HomeScreen.class));
+                                context.finish();
+                            }else{
+                                Toast.makeText(context, "LGN_STP_106__"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
-        Fdb.getReference("Users").child(modiEmail).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                dismissDialog();
-                Toast.makeText(context, "Welcome "+userName, Toast.LENGTH_SHORT).show();
-                context.startActivity(new Intent(context, HomeScreen.class));
-                context.finish();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "LGN_STP_99__"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }else{
+                    Toast.makeText(context, "LGN_STP_112__"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
+
+
+
+//        Fdb.getReference("Users").child(modiEmail).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()){
+//                            dismissDialog();
+//                            Toast.makeText(context, "Welcome "+userName, Toast.LENGTH_SHORT).show();
+//                            context.startActivity(new Intent(context, HomeScreen.class));
+//                            context.finish();
+//                        }else{
+//                            Toast.makeText(context, "LGN_STP_102__"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
     }
 
     private void localSave(String year, String fac) {

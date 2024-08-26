@@ -3,6 +3,7 @@ package com.thedev.rajaratacommunity.Helpers;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.thedev.rajaratacommunity.R;
 public class LoadingDialog {
 
     Activity activity;
+
     Dialog dialog;
 
     public LoadingDialog(Activity activity) {

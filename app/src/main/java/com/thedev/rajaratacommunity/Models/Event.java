@@ -2,13 +2,13 @@ package com.thedev.rajaratacommunity.Models;
 
 public class Event {
     String desc,image,title;
-    int id;
+    long id;
 
     public Event() {
 
     }
 
-    public Event(String desc, String image, String title, int id) {
+    public Event(String desc, String image, String title, long id) {
         this.desc = desc;
         this.image = image;
         this.title = title;
@@ -40,11 +40,11 @@ public class Event {
         this.title = title;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

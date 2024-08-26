@@ -161,23 +161,13 @@ public class LoginScreen extends AppCompatActivity {
                             //get user and create modiEmail to Firebase database folder.
                             FirebaseUser user= mAuth.getCurrentUser();
                             String modiEmail=user.getEmail().replace(".","-");
-                            Fdb.getReference("Users").child(modiEmail).addValueEventListener(new ValueEventListener() {
+                            Fdb.getReference("Users").child(modiEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-
-//                                    Paper.book().write("login_mode","ga");
-
                                     //write user data to local database
                                     Paper.book().write("email",user.getEmail());
                                     Paper.book().write("name",user.getDisplayName());
-                                    //Paper.book().write("role","student");
                                     Paper.book().write("user_img",String.valueOf(user.getPhotoUrl()));
-
-
-
-
                                         //upload the iser data folder to firebase database
                                         HashMap<String,String> map=new HashMap();
                                         map.put("name", user.getDisplayName());

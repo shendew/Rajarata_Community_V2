@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,14 +82,17 @@ public class ProfileFrag extends Fragment {
         userFac=Paper.book().read("faculty");
         userImg=Paper.book().read("user_img");
         userYear=Paper.book().read("year");
-        userRole=Paper.book().read("role");
+
+//        userRole=Paper.book().read("role");
+        userRole="student";
 
 
-        FirebaseDatabase.getInstance().getReference("Users").child(userEmail.replace(".","-")).child("Role")
+        FirebaseDatabase.getInstance().getReference("Users").child(userEmail.replace(".","-")).child("role")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         userRole=snapshot.getValue(String.class);
+                        Log.d("________", "onDataChange: "+userRole);
                     }
 
                     @Override
@@ -96,11 +100,14 @@ public class ProfileFrag extends Fragment {
                         userRole="student";
                     }
                 });
-        userRole="admin";
+
+//        userRole="admin";
 
         pro_name.setText(userName);
         pro_yr.setText(userYear);
         Glide.with(container.getContext()).load(userImg).centerCrop().into(pro_pic);
+
+
 
 //faculties
         if (userFac.equals("tech")){
@@ -122,13 +129,13 @@ public class ProfileFrag extends Fragment {
         }
 
 //status
-        if (userRole.contains("student")){
+        if (userRole.equals("student")){
             pro_status.setText("Undergratuate");
         }else{
             pro_status.setText("Admin");
         }
 
-        if (userRole.contains("admin")){
+        if (userRole.equals("admin")){
             admin_btn.setVisibility(View.VISIBLE);
         }else{
             admin_btn.setVisibility(View.GONE);
@@ -142,6 +149,7 @@ public class ProfileFrag extends Fragment {
 
         logout_btn.setOnClickListener(view -> {
             auth.signOut();
+
         });
 
         myQues.setOnClickListener(view -> {

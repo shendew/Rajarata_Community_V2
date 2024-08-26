@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,6 +53,7 @@ public class HomeScreen extends AppCompatActivity{
     String logSts="";
     FirebaseUser user;
     FirebaseAuth auth;
+    FloatingActionButton addPosts;
 
 
     @Override
@@ -81,6 +83,7 @@ public class HomeScreen extends AppCompatActivity{
         home_menu=findViewById(R.id.home_menu);
         toolBar=findViewById(R.id.toolBar);
         fragment_container_view=findViewById(R.id.fragment_container_view);
+        addPosts=findViewById(R.id.addPosts);
 
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -175,6 +178,10 @@ public class HomeScreen extends AppCompatActivity{
                     .add(R.id.fragment_container_view, HomeFrag.class, null)
                     .commit();
         }
+
+        addPosts.setOnClickListener(view -> {
+            startActivity(new Intent(this,AddPostScreen.class));
+        });
 
 
     }

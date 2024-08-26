@@ -7,12 +7,12 @@ public class SliderData {
     // store the url of image
     private String imgUrl;
     private String title;
-    private int id;
+    private long id;
 
     // Constructor method.
 
 
-    public SliderData(String imgUrl, String title, int id) {
+    public SliderData(String imgUrl, String title, long id) {
         this.imgUrl = imgUrl;
         this.title = title;
         this.id = id;
@@ -36,11 +36,11 @@ public class SliderData {
         this.title = title;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

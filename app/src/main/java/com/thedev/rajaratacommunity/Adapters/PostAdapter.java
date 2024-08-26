@@ -1,6 +1,7 @@
 package com.thedev.rajaratacommunity.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.thedev.rajaratacommunity.Models.Post;
+import com.thedev.rajaratacommunity.PostViewScreen;
 import com.thedev.rajaratacommunity.R;
 
 import java.util.ArrayList;
@@ -59,9 +61,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 String favs=snapshot.getValue(String.class);
 
                 if (favs.contains(post.getId())){
-                    Glide.with(context).load(context.getDrawable(R.drawable.filled)).into(holder.post_heart);
+                    Glide.with(context.getApplicationContext()).load(context.getDrawable(R.drawable.filled)).into(holder.post_heart);
                 }else{
-                    Glide.with(context).load(context.getDrawable(R.drawable.unfilled)).into(holder.post_heart);
+                    Glide.with(context.getApplicationContext()).load(context.getDrawable(R.drawable.unfilled)).into(holder.post_heart);
                 }
             }
 
@@ -72,7 +74,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
 
 
-        Glide.with(context).load(post.getUrl()).centerCrop().into(holder.post_back);
+        Glide.with(context.getApplicationContext()).load(post.getUrl()).centerCrop().into(holder.post_back);
+
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent=new Intent(context, PostViewScreen.class);
+            intent.putExtra("owner",post.getAuther());
+            intent.putExtra("title",post.getTitle());
+            intent.putExtra("desc",post.getDesc());
+            intent.putExtra("image",post.getUrl());
+
+            context.startActivity(intent);
+        });
         holder.post_heart.setOnClickListener(view -> {
 
             addToFav(post.getId());

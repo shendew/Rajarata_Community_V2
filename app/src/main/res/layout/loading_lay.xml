@@ -8,9 +8,9 @@
         android:id="@+id/animationView"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        app:lottie_rawRes="@raw/loading"
+        android:layout_centerInParent="true"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        android:layout_centerInParent="true"/>
+        app:lottie_rawRes="@raw/loading" />
 
 </RelativeLayout>

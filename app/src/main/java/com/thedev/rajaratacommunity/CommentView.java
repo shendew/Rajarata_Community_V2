@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.skydoves.elasticviews.ElasticImageView;
 import com.thedev.rajaratacommunity.Adapters.AAdapter;
+import com.thedev.rajaratacommunity.Helpers.LoadingDialog;
 import com.thedev.rajaratacommunity.Models.Answer;
 
 import java.util.ArrayList;
@@ -36,7 +38,8 @@ public class CommentView extends AppCompatActivity {
     AAdapter adapter;
     EditText comment_input;
     ImageView send_img;
-    ElasticImageView back;
+    ElasticImageView back,delCom;
+    LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +50,11 @@ public class CommentView extends AppCompatActivity {
         comment_input=findViewById(R.id.comment_input);
         send_img=findViewById(R.id.send_img);
         back=findViewById(R.id.back);
+        delCom=findViewById(R.id.delCom);
         ans=new ArrayList<>();
         answers=new ArrayList<>();
         Paper.init(this);
+        loadingDialog=new LoadingDialog(this);
 
 
         answerRview.setHasFixedSize(true);
@@ -61,6 +66,12 @@ public class CommentView extends AppCompatActivity {
         q=intent.getStringExtra("q");
         email=intent.getStringExtra("email");
         id=intent.getStringExtra("id");
+
+        if (email.equals(Paper.book().read("email"))){
+            delCom.setVisibility(View.VISIBLE);
+        }else{
+            delCom.setVisibility(View.GONE);
+        }
 
         try {
             for (String an: ans){
@@ -90,10 +101,27 @@ public class CommentView extends AppCompatActivity {
         back.setOnClickListener(view -> {
             finish();
         });
+        delCom.setOnClickListener(view -> {
+            loadingDialog.showDialog();
+            FirebaseDatabase.getInstance().getReference("QA").child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        loadingDialog.hideDialog();
+                        Toast.makeText(CommentView.this, "Comment Deleted", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else {
+                        loadingDialog.hideDialog();
+                        Toast.makeText(CommentView.this, "Please try again later..", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        });
 
     }
 
     private void addComment(String com) {
+        loadingDialog.showDialog();
         FirebaseDatabase.getInstance().getReference("QA").child(id).child("a").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -105,6 +133,7 @@ public class CommentView extends AppCompatActivity {
                         .child("a").setValue(newdata).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                loadingDialog.hideDialog();
                                 send_img.setFocusable(true);
                                 send_img.setClickable(true);
                                 if (task.isSuccessful()){
@@ -119,6 +148,7 @@ public class CommentView extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                loadingDialog.hideDialog();
                 Toast.makeText(CommentView.this, "CMTV_106__"+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

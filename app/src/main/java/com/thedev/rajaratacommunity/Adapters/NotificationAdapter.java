@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 
 import com.shaun.htmlviewsunny.htmlview;
 import com.thedev.rajaratacommunity.Models.NotificationData;
+import com.thedev.rajaratacommunity.NotificationViewScreen;
 import com.thedev.rajaratacommunity.R;
 
 import java.util.ArrayList;
@@ -57,13 +58,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
         holder.itemView.setOnClickListener(view -> {
-//            Intent intent=new Intent(context,NotificationViewActivity.class);
-//
-//            intent.putExtra("id",notifications.get(position).getID());
-//            intent.putExtra("title",notifications.get(position).getTITLE());
-//            intent.putExtra("desc",notifications.get(position).getDESC());
-//            intent.putExtra("image",notifications.get(position).getIMAGE());
-//            context.startActivity(intent);
+            Intent intent=new Intent(context, NotificationViewScreen.class);
+
+            intent.putExtra("id",notifications.get(position).getID());
+            intent.putExtra("title",notifications.get(position).getTITLE());
+            intent.putExtra("desc",notifications.get(position).getDESC());
+            intent.putExtra("image",notifications.get(position).getIMAGE());
+            context.startActivity(intent);
         });
 
     }

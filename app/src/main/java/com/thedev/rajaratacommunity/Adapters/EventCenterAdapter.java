@@ -1,5 +1,6 @@
 package com.thedev.rajaratacommunity.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.skydoves.elasticviews.ElasticImageView;
 import com.thedev.rajaratacommunity.Helpers.EventMemberView;
+import com.thedev.rajaratacommunity.Helpers.LoadingDialog;
 import com.thedev.rajaratacommunity.Models.Event;
 import com.thedev.rajaratacommunity.R;
 
@@ -32,10 +34,13 @@ public class EventCenterAdapter extends RecyclerView.Adapter<EventCenterAdapter.
 
     Context context;
     ArrayList<Event> events;
+    LoadingDialog loadingDialog;
+    Activity activity;
 
     public EventCenterAdapter(Context context, ArrayList<Event> events) {
         this.context = context;
         this.events = events;
+        activity=(Activity) context;
     }
 
     @NonNull
@@ -46,9 +51,10 @@ public class EventCenterAdapter extends RecyclerView.Adapter<EventCenterAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        loadingDialog=new LoadingDialog(activity);
         Event item= events.get(position);
         holder.head.setText(item.getTitle());
-        Glide.with(context).load(item.getImage()).centerCrop().into(holder.image);
+        Glide.with(context.getApplicationContext()).load(item.getImage()).centerCrop().into(holder.image);
 
         holder.edit.setOnClickListener(view -> {
 
@@ -62,8 +68,8 @@ public class EventCenterAdapter extends RecyclerView.Adapter<EventCenterAdapter.
 
     }
 
-    private void deleteItem(int id) {
-
+    private void deleteItem(long id) {
+        loadingDialog.showDialog();
         FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -72,6 +78,7 @@ public class EventCenterAdapter extends RecyclerView.Adapter<EventCenterAdapter.
                         ds.getRef().removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                loadingDialog.hideDialog();
                                 if (task.isSuccessful()){
                                     Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                                 }else {
@@ -86,7 +93,7 @@ public class EventCenterAdapter extends RecyclerView.Adapter<EventCenterAdapter.
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                loadingDialog.hideDialog();
             }
         });
     }

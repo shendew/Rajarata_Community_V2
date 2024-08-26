@@ -3,6 +3,7 @@ package com.thedev.rajaratacommunity.Adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.thedev.rajaratacommunity.Models.Event;
+import com.thedev.rajaratacommunity.PostViewScreen;
 import com.thedev.rajaratacommunity.R;
 
 import java.util.ArrayList;
@@ -40,10 +42,25 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Viewholder> 
     public void onBindViewHolder(@NonNull EventAdapter.Viewholder holder, int position) {
         Event event=events.get(position);
         holder.event_title.setText(event.getTitle());
-        Glide.with(context).load(event.getImage()).centerCrop().into(holder.event_img);
+        Glide.with(context.getApplicationContext()).load(event.getImage()).centerCrop().into(holder.event_img);
 
         holder.event_more_button.setOnClickListener(view -> {
-            Toast.makeText(context, ""+event.getId(), Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(context, PostViewScreen.class);
+
+            intent.putExtra("title",event.getTitle());
+            intent.putExtra("desc",event.getDesc());
+            intent.putExtra("image",event.getImage());
+
+            context.startActivity(intent);
+        });
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent=new Intent(context, PostViewScreen.class);
+
+            intent.putExtra("title",event.getTitle());
+            intent.putExtra("desc",event.getDesc());
+            intent.putExtra("image",event.getImage());
+
+            context.startActivity(intent);
         });
     }
 

@@ -25,7 +25,6 @@ import com.thedev.rajaratacommunity.R;
 import java.util.ArrayList;
 
 import io.paperdb.Paper;
-
 public class NotificationService extends Service {
     @Nullable
     @Override
@@ -36,7 +35,6 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
     }
 
     @Override
@@ -48,7 +46,6 @@ public class NotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         startForeground();
         getNotifications();
-
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -62,7 +59,8 @@ public class NotificationService extends Service {
         Paper.init(getApplicationContext());
         String fac,year;
         fac=Paper.book().read("faculty");
-        Toast.makeText(this, ""+fac, Toast.LENGTH_SHORT).show();
+        //fac="tech";
+//        TODO:remove assigned value for fac
         year=Paper.book().read("year");
         ArrayList<NotificationData> notifactions = new ArrayList<>();
         FirebaseDatabase.getInstance().getReference("Notifications")
@@ -77,10 +75,9 @@ public class NotificationService extends Service {
                             if (data.child("STATUS").getValue(String.class).equals("newnot")) {
 
                                 String[] fil=data.child("FILT").getValue(String.class).split(",");
-                                Toast.makeText(NotificationService.this, ""+fil[0]+"__"+fil[1], Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(NotificationService.this, ""+fil[0]+"__"+fil[1], Toast.LENGTH_SHORT).show();
 
                                 if (fil[0].equals(year) && fil[1].equals(fac)){
-                                    Toast.makeText(NotificationService.this, "filter added", Toast.LENGTH_SHORT).show();
 
                                     String puredesc = data.child("NOT_DESC").getValue(String.class);
                                     String title = data.child("TITLE").getValue(String.class);
@@ -90,7 +87,6 @@ public class NotificationService extends Service {
                                     notifactions.add(new NotificationData("0", title, "desc", image, desc, "", filt));
 
                                 } else if (fil[0].equals("1") && fil[1].equals(fac)) {
-                                    Toast.makeText(NotificationService.this, "filter fac added", Toast.LENGTH_SHORT).show();
 
                                     String puredesc = data.child("NOT_DESC").getValue(String.class);
                                     String title = data.child("TITLE").getValue(String.class);
@@ -101,7 +97,6 @@ public class NotificationService extends Service {
 
 
                                 } else if (fil[0].equals(year) && fil[1].equals("1")) {
-                                    Toast.makeText(NotificationService.this, "filter year added", Toast.LENGTH_SHORT).show();
 
                                     String puredesc = data.child("NOT_DESC").getValue(String.class);
                                     String title = data.child("TITLE").getValue(String.class);
@@ -118,11 +113,8 @@ public class NotificationService extends Service {
                                     String image = data.child("IMAGE").getValue(String.class);
                                     String filt = data.child("FILT").getValue(String.class);
                                     notifactions.add(new NotificationData("0", title, "desc", image, desc, "", filt));
-                                    Toast.makeText(NotificationService.this, "ALl added", Toast.LENGTH_SHORT).show();
-
+                                }else{
                                 }
-
-
                             }
                         }
                         Notification(notifactions);
@@ -142,19 +134,12 @@ public class NotificationService extends Service {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, "RUSTLE");
             builder.setContentText(notifications.get(i).getNOT_TITLE());
             builder.setContentTitle(notifications.get(i).getTITLE());
-
             builder.setPriority(NotificationCompat.PRIORITY_MAX);
             builder.setSmallIcon(R.drawable.ic_launcher_foreground);
-
             builder.setAutoCancel(false);
-
             //Intent intent = new Intent(NotificationService.this, NotificationPageActivity.class);
             //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
             //PendingIntent pendingIntent = PendingIntent.getActivity(NotificationService.this, 2001, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-
             //TODO:Notification filter check
 
             Intent notificationIntent = new Intent(NotificationService.this, NotificationPageActivity.class);
@@ -166,20 +151,10 @@ public class NotificationService extends Service {
 
             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(NotificationService.this);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             managerCompat.notify(i, builder.build());
-
         }
-
-
     }
 
     private void startForeground() {

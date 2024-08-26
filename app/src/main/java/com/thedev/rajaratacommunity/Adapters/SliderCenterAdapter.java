@@ -1,5 +1,6 @@
 package com.thedev.rajaratacommunity.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import com.skydoves.elasticviews.ElasticImageView;
+import com.thedev.rajaratacommunity.Helpers.LoadingDialog;
 import com.thedev.rajaratacommunity.Models.SliderData;
 import com.thedev.rajaratacommunity.R;
 
@@ -31,10 +33,14 @@ public class SliderCenterAdapter extends RecyclerView.Adapter<SliderCenterAdapte
 
     Context context;
     ArrayList<SliderData> sliders;
+    LoadingDialog loadingDialog;
+    Activity activity;
 
     public SliderCenterAdapter(Context context, ArrayList<SliderData> sliders) {
         this.context = context;
         this.sliders = sliders;
+        activity=(Activity) context;
+
     }
 
     @NonNull
@@ -45,10 +51,10 @@ public class SliderCenterAdapter extends RecyclerView.Adapter<SliderCenterAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        loadingDialog=new LoadingDialog(activity);
         SliderData item=sliders.get(position);
         holder.head.setText(item.getTitle());
-        Glide.with(context).load(item.getImgUrl()).centerCrop().into(holder.image);
+        Glide.with(context.getApplicationContext()).load(item.getImgUrl()).centerCrop().into(holder.image);
 
         holder.edit.setOnClickListener(view -> {
             editItem(item.getId());
@@ -59,13 +65,15 @@ public class SliderCenterAdapter extends RecyclerView.Adapter<SliderCenterAdapte
         });
     }
 
-    private void editItem(int id) {
+    private void editItem(long id) {
     }
 
-    private void deleteItem(int id) {
+    private void deleteItem(long id) {
+        loadingDialog.showDialog();
         FirebaseDatabase.getInstance().getReference("Sliders").child(String.valueOf(id)).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                loadingDialog.showDialog();
                 if (task.isSuccessful()){
                     Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                 }else {

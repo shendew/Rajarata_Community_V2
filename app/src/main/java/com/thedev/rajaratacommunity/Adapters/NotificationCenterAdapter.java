@@ -50,7 +50,7 @@ public class NotificationCenterAdapter extends RecyclerView.Adapter<Notification
 
         holder.title.setText(notifications.get(position).getTITLE());
         holder.body.setText(notifications.get(position).getDESC());
-        Glide.with(context).load(notifications.get(position).getIMAGE()).into(holder.img);
+        Glide.with(context.getApplicationContext()).load(notifications.get(position).getIMAGE()).into(holder.img);
         if (notifications.get(position).getSTATUS().equals("newnot")){
             holder.isrun.setVisibility(View.VISIBLE);
             holder.btn_play.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_stop_24));

@@ -54,10 +54,10 @@ public class ControlPanelScreen extends AppCompatActivity {
             startActivity(new Intent(this,LivePannel.class));
         });
         eventcc.setOnClickListener(view -> {
-            //startActivity(new Intent(this,EventCenterActivity.class));
+            startActivity(new Intent(this,EventCenterActivity.class));
         });
         slidercc.setOnClickListener(view -> {
-            //startActivity(new Intent(this,SlidersCenterActivity.class));
+            startActivity(new Intent(this,SlidersCenterActivity.class));
         });
 
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostViewScreen">
+    tools:context=".AddEventScreen">
     <View
         android:id="@+id/view3"
         android:layout_width="match_parent"
@@ -25,68 +25,64 @@
         android:src="@drawable/round_arrow_back_ios_24" />
 
     <TextView
-        android:id="@+id/postTitle"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="Life is life"
+        android:text="Add a Event"
         android:textColor="@color/white"
         android:textSize="20dp"
-        android:textStyle="bold"
-        android:fontFamily="@font/rubik"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/postTitle"
-        android:layout_marginTop="20dp"
-        android:padding="10dp">
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        >
+        android:padding="10dp"
+        android:layout_below="@id/view3">
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="7dp"
-            app:cardUseCompatPadding="true">
+            app:cardCornerRadius="15dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginBottom="15dp">
 
             <ImageView
-                android:id="@+id/postImage"
+                android:id="@+id/eventImg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
+
                 android:background="@color/main"
-                android:src="@drawable/logo" />
+                android:src="@drawable/round_add_24" />
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/postOwner"
+        <EditText
+            android:id="@+id/eventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="-"
-            android:layout_marginVertical="5dp"
-            android:paddingHorizontal="5dp"
-            android:textAlignment="textEnd"
-            android:fontFamily="@font/rubik"
-            android:textSize="12dp"/>
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Title"
+            android:layout_marginBottom="15dp"/>
 
-        <TextView
-            android:id="@+id/postDesc"
+        <EditText
+            android:id="@+id/eventDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="-"
-            android:layout_marginVertical="5dp"
-            android:textAlignment="center"
-            android:fontFamily="@font/rubik"
-            android:textColor="@color/black"
-            android:lineSpacingExtra="5dp"
-            android:layout_marginBottom="50dp"
-            />
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Description"
+            android:layout_marginBottom="15dp"/>
+
+        <Button
+            android:id="@+id/eventAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:layout_marginHorizontal="30dp"/>
     </LinearLayout>
-    </ScrollView>
 
 </RelativeLayout>

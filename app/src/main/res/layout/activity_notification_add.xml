@@ -44,6 +44,22 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="15dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginBottom="15dp">
+
+            <ImageView
+                android:id="@+id/notificationImg"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+
+                android:background="@color/main"
+                android:src="@drawable/round_add_24" />
+        </androidx.cardview.widget.CardView>
+
 
 
         <EditText

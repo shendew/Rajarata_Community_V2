@@ -59,7 +59,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 //            }
 
         });
-        Glide.with(context).load(news.get(position).getImglink()).centerCrop().into(holder.newsImage);
+        Glide.with(context.getApplicationContext()).load(news.get(position).getImglink()).centerCrop().into(holder.newsImage);
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,6 +75,7 @@ public class HomeFrag extends Fragment {
     String email;
 
 
+
     public HomeFrag() {
         // Required empty public constructor
     }
@@ -94,6 +96,7 @@ public class HomeFrag extends Fragment {
         postsRview=v.findViewById(R.id.postsRview);
         newsmore=v.findViewById(R.id.newsMore);
         postmore=v.findViewById(R.id.postsMore);
+
         Paper.init(getContext());
         email=Paper.book().read("email");
 
@@ -234,41 +237,29 @@ public class HomeFrag extends Fragment {
     private void getLatestNews() {
 
         RequestQueue queue= Volley.newRequestQueue(getContext());
-
         StringRequest request=new StringRequest(Request.Method.GET, mainurl, response -> {
             Document doc= Jsoup.parse(response);
             //Elements data = doc.select("span.art-postheader");
             Elements datat=doc.select("div[class=row align-items-center no-gutter blog-item rs-blog-grid1]");
-
-
             for (int i=0;i<5;i++){
                 Elements data=datat.eq(i);
-
                 String imglink=data.select("div[class=col-md-6]").eq(0).select("a").eq(0).select("img").attr("src");
                 String title=data.select("div[class=col-md-6]").eq(1).select("a").eq(0).text();
-                //title dd
                 String tdate=data.select("div[class=col-md-6]").eq(1).select("div[class=blog-content]").select("ul").text();
                 Elements el=doc.select("div.art-post-inner").select("a");
                 latestnewlink=el.eq(i).attr("href");
                 String link=data.select("div[class=col-md-6]").eq(0).select("a").attr("href");
                 String tbody="t body";
                 news.add(new NewsData(title,tdate,imglink,link));
-
             }
-
             NewsAdapter adapter=new NewsAdapter(getContext(),news);
             newsRview.setAdapter(adapter);
             loadingstts++;
             if (loadingstts==4){
                 loadingDialog.hideDialog();
             }
-
-
-
-
         }, error -> Toast.makeText(getContext(), ""+error.getMessage(), Toast.LENGTH_SHORT).show());
         queue.add(request);
-
     }
 
     private void getPosts(){

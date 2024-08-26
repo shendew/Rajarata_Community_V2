@@ -18,6 +18,15 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/round_arrow_back_ios_24" />
 
+    <com.skydoves.elasticviews.ElasticImageView
+        android:id="@+id/delCom"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/delete"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:visibility="gone"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
